@@ -7,7 +7,7 @@ dotenv.config();
 const cors = require('cors');
 const app = express();
 const cookieParser = require('cookie-parser');
-const connectToDb = require('./db/db').default;
+const connectToDb = require('./db/db');
 const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
 const mapsRoutes = require('./routes/maps.routes');

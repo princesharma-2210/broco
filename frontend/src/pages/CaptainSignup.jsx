@@ -39,23 +39,28 @@ const CaptainSignup = () => {
       }
     }
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
+    try {
+      console.log("Sending Data:", captainData); // Debugging
+  
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/captains/register`, 
+        captainData
+      );
+      console.log("Response:", response.data);
 
     if (response.status === 201) {
       const data = response.data
-      setUser(data.captain)
+      setCaptain(data.captain)
       localStorage.setItem('token', data.token)
       navigate('/captain-home')
     }
-
-    // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
-
-    // if (response.status === 201) {
-    //   const data = response.data
-    //   setCaptain(data.captain)
-    //   localStorage.setItem('token', data.token)
-    //   navigate('/captain-home')
-    // }
+  }catch (error) {
+      console.error(
+        "Signup Error:", 
+        error.response ? error.response.data : error.message
+      );
+    }
+  
 
     setEmail('')
     setFirstName('')
