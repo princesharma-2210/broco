@@ -1,49 +1,52 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { UserDataContext } from '../context/UserContext'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import React, { useContext, useEffect, useState } from 'react';
+import { UserDataContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
-const UserProtectWrapper = ({
-    children
-}) => {
-    const token = localStorage.getItem('token')
-    const navigate = useNavigate()
-    const { user, setUser } = useContext(UserDataContext)
-    const [ isLoading, setIsLoading ] = useState(true)
+const UserProtectWrapper = ({ children }) => {
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
+    const { setUser } = useContext(UserDataContext);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (!token) {
-            navigate('/login')
+            toast.error('No token found! Redirecting to login...');
+            navigate('/login');
+            return;
         }
 
-        axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        const fetchUserProfile = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (response.status === 200) {
+                    setUser(response.data);
+                    setIsLoading(false);
+                    toast.success('User authenticated successfully!');
+                }
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+                localStorage.removeItem('token');
+                toast.error('Authentication failed! Redirecting to login...');
+                navigate('/login');
             }
-        }).then(response => {
-            if (response.status === 200) {
-                setUser(response.data)
-                setIsLoading(false)
-            }
-        })
-            .catch(err => {
-                console.log(err)
-                localStorage.removeItem('token')
-                navigate('/login')
-            })
-    }, [ token ])
+        };
+
+        fetchUserProfile();
+    }, [token, navigate, setUser]);
 
     if (isLoading) {
-        return (
-            <div>Loading...</div>
-        )
+        toast.loading('Authenticating...');
+        return <div>Loading...</div>;
     }
 
-    return (
-        <>
-            {children}
-        </>
-    )
-}
+    return <>{children}</>;
+};
 
-export default UserProtectWrapper
+export default UserProtectWrapper;

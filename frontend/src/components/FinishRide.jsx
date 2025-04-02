@@ -1,29 +1,34 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const FinishRide = (props) => {
 
     const navigate = useNavigate()
 
     async function endRide() {
-        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
-
-            rideId: props.ride._id
-
-
-        }, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-
-        if (response.status === 200) {
-            navigate('/captain-home')
+        if (!props.ride?._id) {
+            toast.error('Invalid ride details!');
+            return;
         }
 
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
+                rideId: props.ride._id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+
+            if (response.status === 200) {
+                toast.success('Ride completed successfully!');
+                navigate('/captain-home')
+            }
+        } catch (error) {
+            toast.error('Error ending ride. Please try again.');
+        }
     }
 
     return (
@@ -65,12 +70,9 @@ const FinishRide = (props) => {
                 </div>
 
                 <div className='mt-10 w-full'>
-
                     <button
                         onClick={endRide}
-                        className='w-full mt-5 flex  text-lg justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Finish Ride</button>
-
-
+                        className='w-full mt-5 flex text-lg justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Finish Ride</button>
                 </div>
             </div>
         </div>
