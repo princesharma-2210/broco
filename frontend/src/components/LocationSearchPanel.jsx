@@ -13,10 +13,10 @@ const LocationSearchPanel = ({
         try {
             if (activeField === 'pickup') {
                 setPickup(suggestion);
-                toast.success(`Pickup location set to ${suggestion}`);
+                // toast.success(`Pickup location set to ${suggestion}`);
             } else if (activeField === 'destination') {
                 setDestination(suggestion);
-                toast.success(`Destination set to ${suggestion}`);
+                // toast.success(`Destination set to ${suggestion}`);
             }
             // Uncomment if needed:
             // setVehiclePanel(true);

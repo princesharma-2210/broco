@@ -9,6 +9,7 @@ import axios from 'axios';
 import { SocketContext } from '../context/SocketContext';
 import { CaptainDataContext } from '../context/CapatainContext';
 import { toast } from 'react-hot-toast';
+import brocoLogo from '../assets/brocoLogojpg.jpg'; 
 
 const CaptainHome = () => {
     const [ridePopupPanel, setRidePopupPanel] = useState(false);
@@ -122,11 +123,10 @@ const CaptainHome = () => {
     return (
         <div className='h-screen'>
             <div className='fixed p-6 top-0 flex items-center justify-between w-screen'>
-                <img
-                    className='w-16'
-                    src='https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png'
-                    alt='Uber Logo'
-                />
+               <img
+                         className='w-16'
+                         src={brocoLogo} alt="Brocomotive Logo"
+                       />
                 <Link
                     to='/captain-home'
                     className='h-10 w-10 bg-white flex items-center justify-center rounded-full'

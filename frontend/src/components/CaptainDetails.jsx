@@ -4,21 +4,23 @@ import toast from 'react-hot-toast';
 
 const CaptainDetails = () => {
     const { captain } = useContext(CaptainDataContext);
-    
-    // Ensure captain object and required fields exist
-    const firstName = captain?.fullname?.firstname || '';
-    const lastName = captain?.fullname?.lastname || '';
-    const earnings = captain?.earnings ?? 295.20; // Default value
-    const onlineHours = captain?.stats?.onlineHours ?? 0; // Default to 0 if undefined
+
+    // Ensure captain object exists before accessing properties
+    if (!captain) {
+        toast.error('Captain data is missing!');
+        return <p className="text-red-500">No captain data available.</p>;
+    }
+
+    const firstName = captain?.fullname?.firstname || 'Unknown';
+    const lastName = captain?.fullname?.lastname || 'Captain';
+    const earnings = captain?.earnings ?? 295.20;
+    const onlineHours = captain?.stats?.onlineHours ?? 0;
     const completedTrips = captain?.stats?.completedTrips ?? 0;
     const rating = captain?.stats?.rating ?? 'N/A';
 
     useEffect(() => {
-        if (!firstName || !lastName) {
-            toast.error('Captain name is missing!');
-        }
-        if (!captain?.profilePic) {
-            toast.warning('Captain profile picture is missing!');
+        if (!captain.profilePic) {
+            toast.error('Captain profile picture is missing!');
         }
     }, [captain]);
 
@@ -27,9 +29,9 @@ const CaptainDetails = () => {
             <div className='flex items-center justify-between'>
                 <div className='flex items-center justify-start gap-3'>
                     <img className='h-10 w-10 rounded-full object-cover' 
-                         src={captain?.profilePic || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdlMd7stpWUCmjpfRjUsQ72xSWikidbgaI1w&s"} 
+                         src={captain.profilePic || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdlMd7stpWUCmjpfRjUsQ72xSWikidbgaI1w&s"} 
                          alt="Captain Profile" />
-                    <h4 className='text-lg font-medium capitalize'>{firstName && lastName ? `${firstName} ${lastName}` : 'Unknown Captain'}</h4>
+                    <h4 className='text-lg font-medium capitalize'>{`${firstName} ${lastName}`}</h4>
                 </div>
                 <div>
                     <h4 className='text-xl font-semibold'>₹{earnings.toFixed(2)}</h4>

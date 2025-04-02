@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserDataContext } from '../context/UserContext';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import brocoLogo from '../assets/brocoLogojpg.jpg'; 
 
 const UserLogin = () => {
     const [email, setEmail] = useState('');
@@ -71,7 +72,7 @@ const UserLogin = () => {
             <div>
                 <img
                     className='w-16 mb-10'
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s"
+                    src={brocoLogo}
                     alt="Uber Logo"
                 />
 

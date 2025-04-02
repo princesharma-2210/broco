@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CaptainDataContext } from '../context/CapatainContext';
 import { toast } from 'react-hot-toast';
+import brocoLogo from '../assets/brocoLogojpg.jpg'; 
 
 const Captainlogin = () => {
   const [email, setEmail] = useState('');
@@ -44,8 +45,8 @@ const Captainlogin = () => {
       <div>
         <img
           className='w-20 mb-3'
-          src="https://www.svgrepo.com/show/505031/uber-driver.svg"
-          alt="Uber Driver"
+          src={brocoLogo}
+          alt="brocomotive Driver"
         />
 
         <form onSubmit={submitHandler}>

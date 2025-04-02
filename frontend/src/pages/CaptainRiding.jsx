@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import LiveTracking from '../components/LiveTracking';
 import { toast } from 'react-hot-toast';
+import brocoLogo from '../assets/brocoLogojpg.jpg'; 
 
 const CaptainRiding = () => {
     const [finishRidePanel, setFinishRidePanel] = useState(false);
@@ -44,8 +45,8 @@ const CaptainRiding = () => {
             <div className='fixed p-6 top-0 flex items-center justify-between w-screen'>
                 <img
                     className='w-16'
-                    src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-                    alt="Uber Logo"
+                    src={brocoLogo}
+                    alt="broco Logo"
                 />
                 <Link
                     to='/captain-home'
