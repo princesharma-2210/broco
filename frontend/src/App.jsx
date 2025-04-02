@@ -14,11 +14,15 @@ import CaptainLogout from './pages/CaptainLogout'
 import Riding from './pages/Riding'
 import CaptainRiding from './pages/CaptainRiding'
 import 'remixicon/fonts/remixicon.css'
+import { Toaster } from 'react-hot-toast';
+
 
 const App = () => {
 
   return (
     <div>
+    <Toaster position="top-right" reverseOrder={false} />
+    
       <Routes>
         <Route path='/' element={<Start />} />
         <Route path='/login' element={<UserLogin />} />
@@ -50,7 +54,9 @@ const App = () => {
             <CaptainLogout />
           </CaptainProtectWrapper>
         } />
+       <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
+   
     </div>
   )
 }

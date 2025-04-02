@@ -1,120 +1,153 @@
-import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import CaptainDetails from '../components/CaptainDetails'
-import RidePopUp from '../components/RidePopUp'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import ConfirmRidePopUp from '../components/ConfirmRidePopUp'
-import { useEffect, useContext } from 'react'
-import { SocketContext } from '../context/SocketContext'
-import { CaptainDataContext } from '../context/CapatainContext'
-import axios from 'axios'
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import CaptainDetails from '../components/CaptainDetails';
+import RidePopUp from '../components/RidePopUp';
+import ConfirmRidePopUp from '../components/ConfirmRidePopUp';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import axios from 'axios';
+import { SocketContext } from '../context/SocketContext';
+import { CaptainDataContext } from '../context/CapatainContext';
+import { toast } from 'react-hot-toast';
 
 const CaptainHome = () => {
+    const [ridePopupPanel, setRidePopupPanel] = useState(false);
+    const [confirmRidePopupPanel, setConfirmRidePopupPanel] = useState(false);
 
-    const [ ridePopupPanel, setRidePopupPanel ] = useState(false)
-    const [ confirmRidePopupPanel, setConfirmRidePopupPanel ] = useState(false)
+    const ridePopupPanelRef = useRef(null);
+    const confirmRidePopupPanelRef = useRef(null);
+    const [ride, setRide] = useState(null);
 
-    const ridePopupPanelRef = useRef(null)
-    const confirmRidePopupPanelRef = useRef(null)
-    const [ ride, setRide ] = useState(null)
-
-    const { socket } = useContext(SocketContext)
-    const { captain } = useContext(CaptainDataContext)
+    const { socket } = useContext(SocketContext);
+    const { captain } = useContext(CaptainDataContext);
 
     useEffect(() => {
+        if (!captain || !socket) {
+            toast.error('Captain or socket context is missing!');
+            return;
+        }
+
         socket.emit('join', {
             userId: captain._id,
-            userType: 'captain'
-        })
+            userType: 'captain',
+        });
+
         const updateLocation = () => {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-
-                    socket.emit('update-location-captain', {
-                        userId: captain._id,
-                        location: {
-                            ltd: position.coords.latitude,
-                            lng: position.coords.longitude
-                        }
-                    })
-                })
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        socket.emit('update-location-captain', {
+                            userId: captain._id,
+                            location: {
+                                ltd: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            },
+                        });
+                        toast.success('Location updated successfully!');
+                    },
+                    (error) => {
+                        toast.error(`Failed to update location: ${error.message}`);
+                    }
+                );
+            } else {
+                toast.error('Geolocation is not supported by this browser.');
             }
-        }
+        };
 
-        const locationInterval = setInterval(updateLocation, 10000)
-        updateLocation()
+        const locationInterval = setInterval(updateLocation, 10000);
+        updateLocation();
 
-        // return () => clearInterval(locationInterval)
-    }, [])
+        return () => {
+            clearInterval(locationInterval);
+            socket.off('new-ride');
+        };
+    }, [socket, captain]);
 
     socket.on('new-ride', (data) => {
+        if (!data) {
+            toast.error('Ride data is missing!');
+            return;
+        }
+        setRide(data);
+        setRidePopupPanel(true);
+        toast.success('New ride received!');
+    });
 
-        setRide(data)
-        setRidePopupPanel(true)
+    const confirmRide = async () => {
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_BASE_URL}/rides/confirm`,
+                {
+                    rideId: ride._id,
+                    captainId: captain._id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                }
+            );
+            setRidePopupPanel(false);
+            setConfirmRidePopupPanel(true);
+            toast.success('Ride confirmed successfully!');
+        } catch (error) {
+            toast.error(`Failed to confirm ride: ${error.message}`);
+        }
+    };
 
-    })
-
-    async function confirmRide() {
-
-        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
-
-            rideId: ride._id,
-            captainId: captain._id,
-
-
-        }, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-
-        setRidePopupPanel(false)
-        setConfirmRidePopupPanel(true)
-
-    }
-
-
-    useGSAP(function () {
+    useGSAP(() => {
         if (ridePopupPanel) {
             gsap.to(ridePopupPanelRef.current, {
-                transform: 'translateY(0)'
-            })
+                transform: 'translateY(0)',
+            });
         } else {
             gsap.to(ridePopupPanelRef.current, {
-                transform: 'translateY(100%)'
-            })
+                transform: 'translateY(100%)',
+            });
         }
-    }, [ ridePopupPanel ])
+    }, [ridePopupPanel]);
 
-    useGSAP(function () {
+    useGSAP(() => {
         if (confirmRidePopupPanel) {
             gsap.to(confirmRidePopupPanelRef.current, {
-                transform: 'translateY(0)'
-            })
+                transform: 'translateY(0)',
+            });
         } else {
             gsap.to(confirmRidePopupPanelRef.current, {
-                transform: 'translateY(100%)'
-            })
+                transform: 'translateY(100%)',
+            });
         }
-    }, [ confirmRidePopupPanel ])
+    }, [confirmRidePopupPanel]);
 
     return (
         <div className='h-screen'>
             <div className='fixed p-6 top-0 flex items-center justify-between w-screen'>
-                <img className='w-16' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
-                <Link to='/captain-home' className=' h-10 w-10 bg-white flex items-center justify-center rounded-full'>
-                    <i className="text-lg font-medium ri-logout-box-r-line"></i>
+                <img
+                    className='w-16'
+                    src='https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png'
+                    alt='Uber Logo'
+                />
+                <Link
+                    to='/captain-home'
+                    className='h-10 w-10 bg-white flex items-center justify-center rounded-full'
+                >
+                    <i className='text-lg font-medium ri-logout-box-r-line'></i>
                 </Link>
             </div>
             <div className='h-3/5'>
-                <img className='h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
-
+                <img
+                    className='h-full w-full object-cover'
+                    src='https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif'
+                    alt='Captain Home'
+                />
             </div>
             <div className='h-2/5 p-6'>
                 <CaptainDetails />
             </div>
-            <div ref={ridePopupPanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <div
+                ref={ridePopupPanelRef}
+                className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'
+            >
                 <RidePopUp
                     ride={ride}
                     setRidePopupPanel={setRidePopupPanel}
@@ -122,13 +155,18 @@ const CaptainHome = () => {
                     confirmRide={confirmRide}
                 />
             </div>
-            <div ref={confirmRidePopupPanelRef} className='fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <div
+                ref={confirmRidePopupPanelRef}
+                className='fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'
+            >
                 <ConfirmRidePopUp
                     ride={ride}
-                    setConfirmRidePopupPanel={setConfirmRidePopupPanel} setRidePopupPanel={setRidePopupPanel} />
+                    setConfirmRidePopupPanel={setConfirmRidePopupPanel}
+                    setRidePopupPanel={setRidePopupPanel}
+                />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CaptainHome
+export default CaptainHome;
