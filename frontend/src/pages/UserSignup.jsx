@@ -62,22 +62,12 @@ const UserSignup = () => {
             toast.error(`Signup failed: ${error.response?.data?.message || error.message}`);
         }
 
-<<<<<<< HEAD
-    if (response.status === 201) {
-      const data = response.data
-      setUser(data.user)
-      console.log(data)
-      localStorage.setItem('token', data.token)
-      navigate('/home')
-    }
-=======
         // Clear input fields
         setEmail('');
         setFirstName('');
         setLastName('');
         setPassword('');
     };
->>>>>>> 3f4ef34a67956c9a554e04c464618a3d38dbd7a6
 
     return (
         <div>
