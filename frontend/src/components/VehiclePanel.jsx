@@ -46,10 +46,10 @@ const VehiclePanel = (props) => {
                 />
                 <div className='ml-2 w-1/2'>
                     <h4 className='font-medium text-base'>
-                    Packers and Movers <span><i className="ri-box-line text-2xl"></i>4</span>
+                    Packers and Movers <span><i className="ri-box-3-fill text-2xl"></i>1000+ kg</span>
                     </h4>
                     <h5 className='font-medium text-sm'>2 mins away</h5>
-                    <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
+                    <p className='font-normal text-xs text-gray-600'>100% Damage-Free Shifting</p>
                 </div>
                 <h2 className='text-lg font-semibold'>₹{props.fare.car}</h2>
             </div>
@@ -60,14 +60,14 @@ const VehiclePanel = (props) => {
                 <img
                     className='h-20'
                     src="https://dom-website-prod-cdn-cms.porter.in/2_wheelers_274869b2af_7262e4dde4.webp"
-                    alt="Moto"
+                    alt="Two-Wheelers"
                 />
                 <div className='-ml-2 w-1/2'>
                     <h4 className='font-medium text-base'>
-                        Moto <span><i className="ri-user-3-fill"></i>1</span>
+                    Two-Wheelers  <span><i className="ri-box-3-fill text-2xl"></i>20kg</span>
                     </h4>
                     <h5 className='font-medium text-sm'>3 mins away</h5>
-                    <p className='font-normal text-xs text-gray-600'>Affordable motorcycle rides</p>
+                    <p className='font-normal text-xs text-gray-600'>Reliable Consignment Delivery</p>
                 </div>
                 <h2 className='text-lg font-semibold'>₹{props.fare.moto}</h2>
             </div>
@@ -82,10 +82,10 @@ const VehiclePanel = (props) => {
                 />
                 <div className='ml-2 w-1/2'>
                     <h4 className='font-medium text-base'>
-                        UberAuto <span><i className="ri-user-3-fill"></i>3</span>
+                    Mini Trucks <span><i className="ri-box-3-fill text-2xl"></i>750kg</span>
                     </h4>
                     <h5 className='font-medium text-sm'>3 mins away</h5>
-                    <p className='font-normal text-xs text-gray-600'>Affordable Auto rides</p>
+                    <p className='font-normal text-xs text-gray-600'>Get Anything Delivered</p>
                 </div>
                 <h2 className='text-lg font-semibold'>₹{props.fare.auto}</h2>
             </div>
