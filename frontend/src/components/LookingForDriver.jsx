@@ -26,7 +26,7 @@ const LookingForDriver = (props) => {
             <div className='flex gap-2 justify-between flex-col items-center'>
                 <img
                     className='h-20'
-                    src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg"
+                    src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-Brocox-take.jpg"
                     alt="Vehicle"
                 />
                 <div className='w-full mt-5'>

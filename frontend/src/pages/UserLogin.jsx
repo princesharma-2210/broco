@@ -73,7 +73,7 @@ const UserLogin = () => {
                 <img
                     className='w-16 mb-10'
                     src={brocoLogo}
-                    alt="Uber Logo"
+                    alt="Broco Logo"
                 />
 
                 <form onSubmit={submitHandler}>
