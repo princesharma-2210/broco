@@ -4,12 +4,12 @@ import { toast } from 'react-hot-toast';
 const WaitingForDriver = (props) => {
     const handleCancel = () => {
         props.waitingForDriver(false);
-        toast.error('Waiting for driver canceled!');
+        // toast.error('Waiting for driver canceled!');
     };
 
     // Validate props
     if (!props.ride || !props.ride.captain || !props.ride.pickup || !props.ride.destination || !props.ride.fare) {
-        toast.error('Incomplete ride information provided!');
+        // toast.error('Incomplete ride information provided!');
         return null;
     }
 
