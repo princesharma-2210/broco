@@ -59,7 +59,7 @@ const LiveTracking = () => {
                         lat: latitude,
                         lng: longitude,
                     });
-                    toast.success('Position updated!');
+                    // toast.success('Position updated!');
                 },
                 (error) => {
                     toast.error(`Error updating position: ${error.message}`);

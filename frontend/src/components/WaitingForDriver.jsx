@@ -9,7 +9,7 @@ const WaitingForDriver = (props) => {
 
     // Validate props
     if (!props.ride || !props.ride.captain || !props.ride.pickup || !props.ride.destination || !props.ride.fare) {
-        toast.error('Incomplete ride information provided!');
+        // toast.error('Incomplete ride information provided!');
         return null;
     }
 

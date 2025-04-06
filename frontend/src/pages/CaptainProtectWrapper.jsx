@@ -42,7 +42,7 @@ const CaptainProtectWrapper = ({ children }) => {
     }, [token, navigate, setCaptain]);
 
     if (isLoading) {
-        toast.loading('Authenticating...');
+        // toast.loading('Authenticating...');
         return <div>Loading...</div>;
     }
 

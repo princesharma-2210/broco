@@ -33,19 +33,20 @@ const VehiclePanel = (props) => {
             >
                 <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i>
             </h5>
-            <h3 className='text-2xl font-semibold mb-5'>Choose a Vehicle</h3>
+            <h3 className='text-2xl font-semibold mb-5'>Delivery hai?
+            #HoJayega!</h3>
             <div
                 onClick={() => handleSelectVehicle('car')}
                 className='flex border-2 active:border-black mb-2 rounded-xl w-full p-3 items-center justify-between'
             >
                 <img
-                    className='h-10'
-                    src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg"
-                    alt="Car"
+                    className='h-20'
+                    src="https://dom-website-prod-cdn-cms.porter.in/Pn_M_56aa8e7af2_4b05aeef37.webp"
+                    alt="Packers and Movers"
                 />
                 <div className='ml-2 w-1/2'>
                     <h4 className='font-medium text-base'>
-                        UberGo <span><i className="ri-user-3-fill"></i>4</span>
+                    Packers and Movers <span><i className="ri-box-line text-2xl"></i>4</span>
                     </h4>
                     <h5 className='font-medium text-sm'>2 mins away</h5>
                     <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
@@ -57,8 +58,8 @@ const VehiclePanel = (props) => {
                 className='flex border-2 active:border-black mb-2 rounded-xl w-full p-3 items-center justify-between'
             >
                 <img
-                    className='h-10'
-                    src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_638,w_956/v1649231091/assets/2c/7fa194-c954-49b2-9c6d-a3b8601370f5/original/Uber_Moto_Orange_312x208_pixels_Mobile.png"
+                    className='h-20'
+                    src="https://dom-website-prod-cdn-cms.porter.in/2_wheelers_274869b2af_7262e4dde4.webp"
                     alt="Moto"
                 />
                 <div className='-ml-2 w-1/2'>
@@ -75,8 +76,8 @@ const VehiclePanel = (props) => {
                 className='flex border-2 active:border-black mb-2 rounded-xl w-full p-3 items-center justify-between'
             >
                 <img
-                    className='h-10'
-                    src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_368,w_552/v1648431773/assets/1d/db8c56-0204-4ce4-81ce-56a11a07fe98/original/Uber_Auto_558x372_pixels_Desktop.png"
+                    className='h-20'
+                    src="https://dom-website-prod-cdn-cms.porter.in/trucks_293a94a860_cc4b2d6d06.webp"
                     alt="Auto"
                 />
                 <div className='ml-2 w-1/2'>
