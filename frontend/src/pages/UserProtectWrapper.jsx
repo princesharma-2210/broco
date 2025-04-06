@@ -42,7 +42,7 @@ const UserProtectWrapper = ({ children }) => {
     }, [token, navigate, setUser]);
 
     if (isLoading) {
-        toast.loading('Authenticating...');
+        // toast.loading('Authenticating...');
         return <div>Loading...</div>;
     }
 

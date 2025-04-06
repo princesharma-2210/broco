@@ -9,7 +9,7 @@ const LookingForDriver = (props) => {
 
     // Validate props
     if (!props.pickup || !props.destination || !props.fare || !props.vehicleType) {
-        // toast.error('Missing Information');
+        // toast.error('Missing necessary information!');
         return null;
     }
 
