@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 const WaitingForDriver = (props) => {
     const handleCancel = () => {
         props.waitingForDriver(false);
-        toast.error('Waiting for driver canceled!');
+        // toast.error('Waiting for driver canceled!');
     };
 
     // Validate props
@@ -20,7 +20,7 @@ const WaitingForDriver = (props) => {
             </h5>
 
             <div className='flex items-center justify-between'>
-                <img className='h-12' src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg" alt="Driver" />
+                <img className='h-12' src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-Brocox-take.jpg" alt="Driver" />
                 <div className='text-right'>
                     <h2 className='text-lg font-medium capitalize'>
                         {props.ride?.captain.fullname.firstname}
