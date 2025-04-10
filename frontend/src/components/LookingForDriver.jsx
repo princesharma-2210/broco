@@ -10,11 +10,12 @@ const LookingForDriver = (props) => {
     // Validate props
     if (!props.pickup || !props.destination || !props.fare || !props.vehicleType) {
         // toast.error('Missing necessary information!');
+        // toast.error('Missing Information');
         return null;
     }
 
     return (
-        <div>
+        <div> 
             <h5
                 className='p-1 text-center w-[93%] absolute top-0'
                 onClick={handleVehicleNotFound}
@@ -26,7 +27,7 @@ const LookingForDriver = (props) => {
             <div className='flex gap-2 justify-between flex-col items-center'>
                 <img
                     className='h-20'
-                    src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-uberx-take.jpg"
+                    src="https://swyft.pl/wp-content/uploads/2023/05/how-many-people-can-a-Brocox-take.jpg"
                     alt="Vehicle"
                 />
                 <div className='w-full mt-5'>
